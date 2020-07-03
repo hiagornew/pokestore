@@ -5,48 +5,48 @@ import { useHistory } from 'react-router-dom';
 
 const  Home = ()=> {
   const history = useHistory();
-  const [usuario, setUsuario] = useState('');
-  const[erro, setErro] =  useState(false);
-  const[repositoriesName, setRepositoriesName] = useState([])
-  const HandlePesquisa = () =>{
+  const [pokemonData, setPokemonData] = useState([])
+  const HandlePesquisa = () => {
     //acessando a api com axios get
+    const data = [];
     axios.get(`https://pokeapi.co/api/v2/pokemon/`).then(response => {
       const repositories = response.data.results;
-       const responseNames =[];
-      repositories.map((repository) =>{
-        responseNames.push(repository.name);
+      repositories.map((repository) => {
+        const poke = {};
+        axios.get(repository.url).then(res => { 
+          poke.image = res.data.sprites.front_shiny
+        })
+        poke.name = repository.name;
+        data.push(poke)
        
       });
-      setRepositoriesName(responseNames)
-      //console.log(repositoriesName);
-      //salvando no Storage
-      //localStorage.setItem('repositoriesName', JSON.stringify(repositoriesName));
-      //localStorage.setItem('user',usuario);
-      //mudando para a pagina repositories
-      //setErro(false);
-     // history.push('/repositories')
+      setPokemonData(data)
+      
     }).catch(err =>{
-      setErro(true);
+      console.log(err)
     });
   }
 
-useEffect(()=>{
-  HandlePesquisa()
-},[])
 
+  useEffect(()=>{
+    HandlePesquisa()
+  },[])
 
+  console.log(pokemonData)
   return (
-    
     <S.ContainerHome>
-       { repositoriesName.map(name =>{
-        return<h1>{name}</h1>
+      <h1>Loja</h1>
+      <div>
+      { pokemonData?.map((pokemon,index) => {
+        return(
+        <S.CardPokemon key={`pokemon-${index}`}> 
+          <S.NomePokemon> {pokemon.name}</S.NomePokemon>
+          <img alt="pokemon ilustration" src={pokemon.image} />
+          
+          <S.Button>Comprar</S.Button>
+        </S.CardPokemon>)
       })}
-      <S.Content>
-      <S.Input  className="usuarioInput" placeholder="Usuário" value={usuario} onChange={e => setUsuario(e.target.value)} />
-    
-      
-      </S.Content>
-      {erro ? <S.ErrorMsg>Ocorreu um erro, Tente Novamente</S.ErrorMsg> : ''}
+      </div>
     </S.ContainerHome>
   );
 }

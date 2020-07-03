@@ -42,15 +42,29 @@ export const Button = styled.button`
 `;
 
 export const ContainerHome = styled.div`
-    height:100vh;
     flex-direction:column;
     display: flex;
     align-items:center;
     justify-content:center;
+    
 `;
 export const Content = styled.div`
     align-items:center;
     justify-content: center;
+`;
+
+export const CardPokemon = styled.div`
+    height:18vh;
+    width: 15vw;
+    display:flex;
+    flex-direction:column;
+    background-color: #ddd;
+`;
+
+export const NomePokemon = styled.h2`
+   font-size: 1.5em;
+  text-align: center;
+  color: #333;
 `;
 
 export const LinkHome = styled(Link)`
