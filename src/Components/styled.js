@@ -42,10 +42,10 @@ export const Button = styled.button`
 `;
 
 export const ContainerHome = styled.div`
-    flex-direction:column;
-    display: flex;
-    align-items:center;
-    justify-content:center;
+    display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
     
 `;
 export const Content = styled.div`
@@ -54,17 +54,35 @@ export const Content = styled.div`
 `;
 
 export const CardPokemon = styled.div`
-    height:18vh;
-    width: 15vw;
-    display:flex;
-    flex-direction:column;
-    background-color: #ddd;
+    
+  display:flex;
+  flex-direction:column;
+  background-color: #ddd;
+  margin:5px;
+  width:200px;
+  border:1px solid #29272e;
+  :hover{
+      box-shadow: 5px 5px 16px 0px rgba(138,138,138,1);
+      cursor:pointer; 
+  }
+
+  img { 
+  height:50;
+  object-fit:cover;
+  }
 `;
 
 export const NomePokemon = styled.h2`
    font-size: 1.5em;
   text-align: center;
   color: #333;
+`;
+
+export const ContainerPokemon = styled.div`
+    display:flex;
+    flex-wrap: wrap;
+    width:70%;
+    margin:20px;
 `;
 
 export const LinkHome = styled(Link)`
