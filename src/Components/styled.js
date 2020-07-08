@@ -85,6 +85,30 @@ export const ContainerPokemon = styled.div`
     margin:20px;
 `;
 
+export const PrecoPokemon = styled.h2`
+   font-size: 1.5em;
+  text-align: center;
+  color: #da4925;
+`;
+export const DivCarrinho = styled.div`
+    float:right;
+    width:200px;
+    height:400px;
+    display:flex;
+    border:1px solid #29272e;
+    display:flex;
+    flex-direction:column;
+    
+`
+export const CardCarrinho = styled.div`
+ border:0.5px solid #29272e;
+ display:flex;
+ flex-direction:row;
+`
+export const ContainerGeral = styled.div`
+    position:absolute;
+`
+
 export const LinkHome = styled(Link)`
    display: block;
     width: 4rem;
