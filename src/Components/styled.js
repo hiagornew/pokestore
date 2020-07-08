@@ -61,13 +61,14 @@ export const CardPokemon = styled.div`
   margin:5px;
   width:200px;
   border:1px solid #29272e;
+  border-radius: 6px;
   :hover{
       box-shadow: 5px 5px 16px 0px rgba(138,138,138,1);
       cursor:pointer; 
   }
 
   img { 
-  height:50;
+  height:200px;
   object-fit:cover;
   }
 `;
@@ -75,6 +76,7 @@ export const CardPokemon = styled.div`
 export const NomePokemon = styled.h2`
    font-size: 1.5em;
   text-align: center;
+  text-transform:capitalize;
   color: #333;
 `;
 
@@ -92,21 +94,40 @@ export const PrecoPokemon = styled.h2`
 `;
 export const DivCarrinho = styled.div`
     float:right;
+    position:fixed;
+    right:9px;
+    top:27px;
     width:200px;
     height:400px;
     display:flex;
     border:1px solid #29272e;
     display:flex;
     flex-direction:column;
-    
+    overflow-y:auto;
 `
 export const CardCarrinho = styled.div`
  border:0.5px solid #29272e;
  display:flex;
  flex-direction:row;
+ justify-content:space-between;
+ min-height:40px;
+ align-items:center;
+ padding: 0px 10px;
+
+ p{
+     text-transform:capitalize;
+ }
 `
 export const ContainerGeral = styled.div`
-    position:absolute;
+    position:relative;
+`
+
+export const ContainerCarrinhoFixed = styled.div`
+    position:fixed;
+    width:200px;
+    height:80px;
+    top:412px;
+    right:10px;
 `
 
 export const LinkHome = styled(Link)`
@@ -132,4 +153,53 @@ export const ErrorMsg = styled.span`
 
 export const LinkA = styled.a`
 color: white;
+`;
+
+export const ButtonRemove = styled.div`
+    background-color: #910d0d;
+    color: #fff;
+    width:20px;
+    height:20px;
+    border-radius: 6px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`;
+
+export const ModalBackground = styled.div`
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color: #28272080;
+    z-index:10;
+    position:fixed;
+    top:0px;
+    text-align:center;
+`;
+
+export const ModalContainer = styled.div`
+    width:400px;
+    height:200px;
+    align-items:center;
+    justify-content:center;
+    background-color: #fff;
+    position:relative;
+    border-radius:6px;
+
+
+    button{
+        width:100%;
+        background-color: #318833;
+        color: #fff;
+        font-size:1.5em;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position: absolute;
+        bottom: 0;
+        border-radius:0 0 6px 6px;
+        border: 1px solid #318833;
+    }
 `;

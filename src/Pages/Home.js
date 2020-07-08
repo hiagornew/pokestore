@@ -2,11 +2,18 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import * as S from '../Components/styled';
 import { useHistory } from 'react-router-dom';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const  Home = ()=> {
   const history = useHistory();
+  const dataCarrinho = [];
+  
   const [pokemonData, setPokemonData] = useState([])
   const[itemData, setItemData] = useState([])
+  const[totalPreco, setTotalPreco] = useState(0)
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
 
   const HandlePesquisa = async () => {
     //acessando a api com axios get
@@ -25,10 +32,27 @@ const  Home = ()=> {
   }
 
    const ButtonComprar = async (nome,preco) =>{
+     const itens = [...itemData]
     const item={};
-    item.name = nome;
+    item.name =  nome;
     item.preco = preco;
-        await setItemData(item);
+    setTotalPreco(totalPreco +preco);
+    itens.push(item);
+    await setItemData(itens);
+    console.log(itemData)
+  }
+
+  const RemoveItem = (index,preco) =>{
+    const itens =[...itemData]
+    itens.splice(index,1)
+    setItemData(itens)
+    setTotalPreco(totalPreco -preco);
+  }
+
+  const SubmitCheckout = ()=>{
+    setItemData([]);
+    setTotalPreco(0);
+    toggle();
   }
 
   useEffect(()=>{
@@ -38,6 +62,7 @@ const  Home = ()=> {
   //console.log(pokemonData)
   
   return (
+    <>  
       <S.ContainerGeral>
         <S.ContainerPokemon>
         { pokemonData.map((pokemon,index) => {
@@ -54,15 +79,32 @@ const  Home = ()=> {
         <S.DivCarrinho>
         { itemData?.map((item,index) => {
             return(
-              <S.CardCarrinho>
-                {item.name}  R$:{item.preco}
-                </S.CardCarrinho>
+              <S.CardCarrinho key={`card-${index}`}>
+                <p>{item.name}  R$:{item.preco}</p>
+                <S.ButtonRemove onClick= {() => { RemoveItem(index,item.preco)}} >  X  </S.ButtonRemove> 
+                
+              </S.CardCarrinho>
+              
             )})
-        } 
-         <p> Total: R$10,00</p>
-          <S.Button>Finalizar</S.Button> 
+            
+        }
         </S.DivCarrinho>
+        <S.ContainerCarrinhoFixed>
+         <p> Total: R${totalPreco}</p>
+          <S.Button onClick={() => toggle()} >Finalizar</S.Button> 
+        </S.ContainerCarrinhoFixed>
       </S.ContainerGeral>
+
+      {modal &&
+        <S.ModalBackground>
+          <S.ModalContainer>
+            <h1>Sucesso</h1>
+            <p>Sua Compra foi finalizada</p>
+            <Button onClick={() => SubmitCheckout()}>Confirmar</Button>
+          </S.ModalContainer>
+        </S.ModalBackground>
+      }
+    </>
   );
 }
 
